@@ -13,6 +13,12 @@ jobs:
     steps:
       - name: set env var for test
         run: echo "TAG_TEST=123" >> $GITHUB_ENV
+      - name: check ref
+        run: |
+          if [[ ${GITHUB_REF} =~ "rc" ]]; then
+            TYPE="release-candidate"
+          fi
+          echo "echo ref is $GITHUB_REF, type is $TYPE"
       - name: Check release type
         id: check_release
         run: |
