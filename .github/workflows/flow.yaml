@@ -11,10 +11,13 @@ jobs:
     outputs:
       release_type: ${{ steps.check_release.outputs.type }}
     steps:
+      - name: set env var for test
+        run: echo "TAG_TEST=123" >> $GITHUB_ENV
       - name: Check release type
         id: check_release
         run: |
           TYPE="release-candidate"
+          echo "tag test is $TAG_TEST"
           echo "type: ${TYPE}"
           echo "RELEASE_SUFFIX=-rc" >> $GITHUB_ENV
           echo "type=${TYPE}" >> $GITHUB_OUTPUT
