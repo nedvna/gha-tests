@@ -1,0 +1,12 @@
+name: Publish RC
+on:
+  push:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: tets yq
+        run: yq -y -i '.name = "chart-name-rc"' Chart.yaml
+      - name: print
+        run: cat Chart.yaml
