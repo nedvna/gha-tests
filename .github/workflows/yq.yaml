@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: tets yq
-        run: yq -y -i '.name = "chart-name-rc"' Chart.yaml
+        run: yq e -i '.name = "chart-name-rc"' Chart.yaml
       - name: print
         run: cat Chart.yaml
