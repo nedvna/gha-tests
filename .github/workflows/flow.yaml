@@ -8,6 +8,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      release_type: ${{ steps.check_release.outputs.type }}
     steps:
       - name: Check release type
         id: check_release
@@ -17,5 +19,11 @@ jobs:
           echo "RELEASE_SUFFIX=-rc" >> $GITHUB_ENV
           echo "type=${TYPE}" >> $GITHUB_OUTPUT
       - name: Update chart name for RC versions
-        if: needs.build.outputs.release_type == 'release-candidate'
+        if: steps.check_release.outputs.type == 'release-candidate'
         run: echo "suffix is ${{ env.RELEASE_SUFFIX }}"
+  second_job:
+    runs-on: ubuntu-latest
+    if: needs.release.outputs.release_type == 'production'
+    steps:
+      - name: print
+        run: echo 'well done'
